@@ -16,9 +16,10 @@ public class Controller : MonoBehaviour {
         menu = menuIn;
     }
 
-    public static void ToggleProperties(bool state)
+    public static void ToggleProperties(bool state, ItemType itemType)
     {
         properties.Toggle(state);
+        properties.SetCorrectView(itemType);
     }
 
     public static void ToggleMenu(bool state)

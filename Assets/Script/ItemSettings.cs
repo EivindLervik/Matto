@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemType
+{
+    Operator, Input, Output
+}
+
 public class ItemSettings : MonoBehaviour {
-
     public string itemName;
+    public string description;
 
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void OpenProperties()
+    public virtual void OpenProperties()
     {
-        Controller.ToggleProperties(true);
-        Controller.SetCurrent(this);
+        // VIRTUAL
     }
 
-    public void ApplySettings(string itemName)
+    public virtual void ApplySettings(ArrayList items)
     {
-        this.itemName = itemName;
+        itemName = (string) items[0];
+        description = (string) items[1];
     }
 
     public string GetItemName()
     {
         return itemName;
+    }
+
+    public string GetDescription()
+    {
+        return description;
     }
 }
