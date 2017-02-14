@@ -61,13 +61,16 @@ public class PropertiesBoxScript : BOX_MAIN {
         switch (itemType)
         {
             case ItemType.Operator:
-                // Something
+                op.gameObject.SetActive(true);
+                inputs.gameObject.SetActive(true);
                 break;
             case ItemType.Input:
-                // Something
+                op.gameObject.SetActive(false);
+                inputs.gameObject.SetActive(false);
                 break;
             case ItemType.Output:
-                // Something
+                op.gameObject.SetActive(false);
+                inputs.gameObject.SetActive(false);
                 break;
             default:
                 Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
@@ -89,11 +92,9 @@ public class PropertiesBoxScript : BOX_MAIN {
                 op.value = (int)io.GetItemOperator();
                 inputs.value = io.GetInputs();
                 break;
-            case ItemType.Input: 
-                // Something
+            case ItemType.Input:
                 break;
-            case ItemType.Output: 
-                // Something
+            case ItemType.Output:
                 break;
             default: Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
                 break;

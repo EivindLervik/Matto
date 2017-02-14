@@ -11,6 +11,8 @@ public class ItemSettings : MonoBehaviour {
     public string itemName;
     public string description;
 
+    protected bool canOpen;
+
     public virtual void OpenProperties()
     {
         // VIRTUAL
@@ -30,5 +32,16 @@ public class ItemSettings : MonoBehaviour {
     public string GetDescription()
     {
         return description;
+    }
+
+    public void SetCanOpen(bool canOpen)
+    {
+        this.canOpen = canOpen;
+    }
+
+    public void Drag()
+    {
+        transform.position = Input.mousePosition;
+        canOpen = false;
     }
 }

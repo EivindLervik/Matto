@@ -15,9 +15,11 @@ public class Item_Operation : ItemSettings {
 
     public override void OpenProperties()
     {
-        base.OpenProperties();
-        Controller.SetCurrent(this);
-        Controller.ToggleProperties(true, ItemType.Operator);
+        if (canOpen)
+        {
+            base.OpenProperties();
+            Controller.ToggleProperties(true, ItemType.Operator, this);
+        }
     }
 
     public override void ApplySettings(ArrayList items)

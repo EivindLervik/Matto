@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Item_Input : ItemSettings {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override void OpenProperties()
+    {
+        if (canOpen)
+        {
+            base.OpenProperties();
+            Controller.ToggleProperties(true, ItemType.Input, this);
+        }
+    }
+
+    public override void ApplySettings(ArrayList items)
+    {
+        base.ApplySettings(items);
+
+        GetComponentInChildren<Text>().text = itemName;
+    }
 }
