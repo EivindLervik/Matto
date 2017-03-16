@@ -24,6 +24,13 @@ public class ItemSettings : MonoBehaviour {
         description = (string) items[1];
     }
 
+    public virtual float Get()
+    {
+        return 0.0f;
+    }
+
+
+
     public string GetItemName()
     {
         return itemName;
@@ -44,4 +51,5 @@ public class ItemSettings : MonoBehaviour {
         transform.position = Input.mousePosition;
         canOpen = false;
     }
+
 }

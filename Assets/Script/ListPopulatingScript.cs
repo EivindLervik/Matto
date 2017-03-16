@@ -10,25 +10,40 @@ public class ListPopulatingScript : MonoBehaviour {
     public float height;
     public GameObject item;
 
-    private ArrayList items;
+    private List<GameObject> items;
 
 	void Start () {
-        RectTransform rtSelf = GetComponent<RectTransform>();
-        rtSelf.offsetMin = new Vector2(0.0f, (-amount * (spaceBetween + height)) - indentFromEdges);
+        items = new List<GameObject>();
 
-
-        for (int i=0; i<amount; i++)
+        for (int i = 0; i < amount; i++)
         {
-            GameObject go = Instantiate(item, transform);
-            RectTransform rt = go.GetComponent<RectTransform>();
-
-            rt.offsetMin = new Vector2(indentFromEdges, -indentFromEdges - ((height * (i + 1)) + (spaceBetween * i)));
-            rt.offsetMax = new Vector2(-indentFromEdges, -indentFromEdges - ((height + spaceBetween) * i));
-            
+            MakeGraphix(i);
         }
-	}
 
-	void Update () {
-		
-	}
+    }
+
+    public GameObject MakeGraphix(int index)
+    {
+        GameObject go = Instantiate(item, transform);
+        RectTransform rt = go.GetComponent<RectTransform>();
+
+        rt.offsetMin = new Vector2(indentFromEdges, -indentFromEdges - ((height * (index + 1)) + (spaceBetween * index)));
+        rt.offsetMax = new Vector2(-indentFromEdges, -indentFromEdges - ((height + spaceBetween) * index));
+
+        RectTransform rtSelf = GetComponent<RectTransform>();
+        rtSelf.offsetMin = new Vector2(0.0f, ((-index - 1) * (spaceBetween + height)) - indentFromEdges + rtSelf.offsetMax.y);
+
+        items.Add(go);
+
+        return go;
+    }
+
+	public void AddExpression () {
+        Expression e = MakeGraphix(amount).GetComponent<Expression>();
+        e.id = amount;
+        Controller.InsertExpression(e);
+        amount++;
+
+        e.UseExpression();
+    }
 }

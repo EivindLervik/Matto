@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Item_Output : ItemSettings {
 
+    private ItemSettings input;
+
     public override void OpenProperties()
     {
         if (canOpen)
@@ -19,5 +21,14 @@ public class Item_Output : ItemSettings {
         base.ApplySettings(items);
 
         GetComponentInChildren<Text>().text = itemName;
+    }
+
+
+    /**
+        This method retrives the value from the previous object
+    **/
+    public override float Get()
+    {
+        return input.Get();
     }
 }

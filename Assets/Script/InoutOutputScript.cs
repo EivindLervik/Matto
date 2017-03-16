@@ -5,28 +5,52 @@ using UnityEngine;
 public class InoutOutputScript : MonoBehaviour {
 
     public GameObject line;
-    private InoutOutputScript target;
+    public Transform fromPoint;
+    private ArrayList targets;
 
-	void Start () {
-        DrawLine(GetComponent<RectTransform>().position, new Vector2(0,0));
+    private GameObject currentLine;
+
+    void Start () {
+        //DrawLine(fromPoint.position, new Vector2(0,0));
     }
 
 	void Update () {
-		
+		if(currentLine != null)
+        {
+            Vector3 start = fromPoint.position;
+            Vector3 finish = Input.mousePosition;
+
+            RectTransform rt = currentLine.GetComponent<RectTransform>();
+            rt.position = start;
+            float dist = Vector2.Distance(start, finish) + 30;
+            float angle = Vector2.Angle(Vector3.up, (finish - start).normalized);
+            print(dist + " | " + start + " og " + finish + " er " + angle);
+            rt.offsetMax = new Vector2(0.0f, dist);
+            
+            if(Vector3.Dot(Vector3.right, (finish - start).normalized) >= 0.0f)
+            {
+                rt.eulerAngles = new Vector3(0, 0, -angle);
+            }
+            else
+            {
+                rt.eulerAngles = new Vector3(0, 0, angle);
+            }
+
+        }
 	}
 
-    void DrawLine(Vector2 start, Vector2 finish){
-        GameObject go = Instantiate(line);
-        go.transform.parent = transform;
-        RectTransform rt = go.GetComponent<RectTransform>();
+    void DrawLine(){
+        currentLine = Instantiate(line);
+        currentLine.transform.SetParent(transform);
+    }
 
-        rt.position = start;
-        float dist = Vector2.Distance(start, finish);
-        float angle = Vector2.Angle(transform.up, (finish - start).normalized);
-        print(dist + " | " + start + " og " + finish + " er " + angle);
-        rt.offsetMax = new Vector2(0.0f, dist);
-        //rt.offsetMin = new Vector2(dist / 2.0f, dist / 2.0f);
+    public void Enter()
+    {
+        DrawLine();
+    }
 
-        rt.Rotate(0.0f, 0.0f, angle);
-    }  
+    public void Drop()
+    {
+        currentLine = null;
+    }
 }

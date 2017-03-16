@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class ItemScript : MonoBehaviour {
 
+    
 
-
-	void Start () {
-		
-	}
-
-	void Update () {
-		
-	}
 }
