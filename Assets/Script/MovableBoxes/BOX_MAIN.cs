@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BOX_MAIN : MonoBehaviour {
+
     public float moveSpeed;
-    public float openX;
-    public float closeX;
 
     protected bool open;
     protected RectTransform trans;
@@ -19,11 +18,11 @@ public class BOX_MAIN : MonoBehaviour {
     {
         if (open)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(openX, transform.position.y, transform.position.z), Time.deltaTime * moveSpeed);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(0.0f, transform.position.y, transform.position.z), Time.deltaTime * moveSpeed);
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(closeX, transform.position.y, transform.position.z), Time.deltaTime * moveSpeed);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(-Screen.width * trans.anchorMax.x, transform.position.y, transform.position.z), Time.deltaTime * moveSpeed);
         }
     }
 

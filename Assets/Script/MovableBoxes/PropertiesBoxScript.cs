@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PropertiesBoxScript : BOX_MAIN {
 
     [Header("Properties")]
+    public Text title;
     public InputField itemName;
     public InputField description;
     public Dropdown op;
@@ -85,10 +86,13 @@ public class PropertiesBoxScript : BOX_MAIN {
             case ItemType.Operator:
                 Item_Operation io = (Item_Operation)current;
                 op.value = (int)io.GetItemOperator();
+                title.text = "Operator";
                 break;
             case ItemType.Input:
+                title.text = "Input";
                 break;
             case ItemType.Output:
+                title.text = "Output";
                 break;
             default: Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
                 break;
