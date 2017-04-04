@@ -5,66 +5,111 @@ using UnityEngine.UI;
 
 public class Expression : MonoBehaviour {
 
-    public int id;
+    // Name-stuff
+    public string expressionName;
+    public Text expressionNameText;
 
-    // Inputs
-    private List<GameObject> inputsGraphix;
-    private List<Item_Input> inputs;
-
-    // Saved graphix from the layout
+    // Editor-Screen Graphix
     private List<GameObject> layoutGraphix;
 
-    // Outputs
-    private List<GameObject> outputsGraphix;
+    // Input and output scripts
+    private List<Item_Input> inputs;
     private List<Item_Output> outputs;
 
-	void Start () {
-        inputsGraphix = new List<GameObject>();
-        inputs = new List<Item_Input>();
+	public void Instantiate () {
         layoutGraphix = new List<GameObject>();
-        outputsGraphix = new List<GameObject>();
+        inputs = new List<Item_Input>();
         outputs = new List<Item_Output>();
+
+        expressionNameText = GetComponentInChildren<Text>();
+        expressionName = "My expression";
 	}
 
 	public void RunExpression()
     {
-        int index = 0;
-
-        foreach (GameObject field in inputsGraphix)
-        {
-            // TODO Sjekk at det ikkje vert skrive inn noko anna enn tall
-            inputs[index].SetValue(float.Parse(field.GetComponent<Text>().text));
-            index++;
-        }
-
-        index = 0;
-
         foreach (Item_Output item in outputs)
         {
-            outputsGraphix[index].GetComponent<Text>().text = item.Get().ToString();
-            index++;
+            item.GetTarget().text = item.Get().ToString();
         }
+        
     }
 
     
 
-    // ACCESSERS
+    // PUBLIC ACCESSERS
 
-    public void InsertInput(GameObject go)
+    public List<Item_Input> GetInputs()
     {
-        inputsGraphix.Add(go);
-        layoutGraphix.Add(go);
+        return inputs;
+    }
+
+    public List<Item_Output> GetOutputs()
+    {
+        return outputs;
     }
 
     public void InsertGraphix(GameObject go)
     {
         layoutGraphix.Add(go);
+
+        // Is it an input or an output?
+        Item_Input ii = go.GetComponentInChildren<Item_Input>();
+        Item_Output io = go.GetComponentInChildren<Item_Output>();
+        if (ii != null)
+        {
+            InsertInput(ii);
+        }
+        else if (io != null)
+        {
+            InsertOutput(io);
+        }
     }
 
-    public void InsertOutput(GameObject go)
+    public void RemoveGraphix(GameObject go)
     {
-        outputsGraphix.Add(go);
-        layoutGraphix.Add(go);
+        // Is it an input or an output?
+        Item_Input ii = go.GetComponentInChildren<Item_Input>();
+        Item_Output io = go.GetComponentInChildren<Item_Output>();
+        if (ii != null)
+        {
+            RemoveInput(ii);
+        }
+        else if (io != null)
+        {
+            RemoveOutput(io);
+        }
+
+        layoutGraphix.Remove(go);
+    }
+
+    public List<GameObject> GetGraphix()
+    {
+        return layoutGraphix;
+    }
+
+
+
+
+    // PRIVATE ACCESSERS
+
+    private void InsertInput(Item_Input input)
+    {
+        inputs.Add(input);
+    }
+
+    private void RemoveInput(Item_Input input)
+    {
+        inputs.Remove(input);
+    }
+
+    private void InsertOutput(Item_Output output)
+    {
+        outputs.Add(output);
+    }
+
+    private void RemoveOutput(Item_Output output)
+    {
+        outputs.Remove(output);
     }
 
 
@@ -72,6 +117,15 @@ public class Expression : MonoBehaviour {
     // Clicked
     public void UseExpression()
     {
-        Controller.ToggleExpressionUse();
+        Controller.ToggleExpressionUse(this);
+    }
+
+    public void UpdateExpressionInList()
+    {
+        if(expressionNameText == null)
+        {
+            expressionNameText = GetComponentInChildren<Text>();
+        }
+        expressionNameText.text = expressionName;
     }
 }

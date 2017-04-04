@@ -22,5 +22,7 @@ public class MenuBoxItemScript : MonoBehaviour {
         go.transform.SetParent(layout);
 
         Controller.ToggleMenu(false);
+
+        Controller.InsertGraphix(go);
     }
 }

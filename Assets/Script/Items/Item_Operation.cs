@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Operator
 {
@@ -11,9 +12,6 @@ public class Item_Operation : ItemSettings {
 
     [Header("Operation")]
     public Operator itemOperator;
-    public int inputs;
-
-    private ItemSettings[] inputValues;
 
     public override void OpenProperties()
     {
@@ -27,8 +25,31 @@ public class Item_Operation : ItemSettings {
     public override void ApplySettings(ArrayList items)
     {
         base.ApplySettings(items);
+
         itemOperator = (Operator) items[2];
-        inputs = (int)items[3];
+
+        string newText = "";
+        switch (itemOperator)
+        {
+            case Operator.Plus:
+                newText = "+";
+                break;
+            case Operator.Minus:
+                newText = "-";
+                break;
+            case Operator.Multiplication:
+                newText = "*";
+                break;
+            case Operator.Division:
+                newText = "/";
+                break;
+            default:
+                Debug.LogWarning("This operator is not supported!");
+                newText = "Error";
+                break;
+        }
+
+        GetComponentInChildren<Text>().text = newText;
     }
 
 
@@ -38,23 +59,15 @@ public class Item_Operation : ItemSettings {
         return itemOperator;
     }
 
-    public int GetInputs()
-    {
-        return inputs;
-    }
-
     /**
         This method retrives the value from the previous object
     **/
     public override float Get()
     {
-        int index = 0;
-        float[] values = new float[inputValues.Length];
+        float[] values = new float[inputValues.Count];
 
-        foreach(ItemSettings item in inputValues)
-        {
-            values[index] = item.Get();
-        }
+        values[0] = inputValues["A"].Get();
+        values[1] = inputValues["B"].Get();
 
         return DoMath(values);
     }

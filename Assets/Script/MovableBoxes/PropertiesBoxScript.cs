@@ -9,7 +9,6 @@ public class PropertiesBoxScript : BOX_MAIN {
     public InputField itemName;
     public InputField description;
     public Dropdown op;
-    public Dropdown inputs;
 
     private ItemSettings current;
     private ItemType itemType;
@@ -37,7 +36,6 @@ public class PropertiesBoxScript : BOX_MAIN {
             {
                 case ItemType.Operator:
                     answer.Add(op.value);
-                    answer.Add(inputs.value);
                     break;
                 case ItemType.Input:
                     // Something
@@ -62,15 +60,12 @@ public class PropertiesBoxScript : BOX_MAIN {
         {
             case ItemType.Operator:
                 op.gameObject.SetActive(true);
-                inputs.gameObject.SetActive(true);
                 break;
             case ItemType.Input:
                 op.gameObject.SetActive(false);
-                inputs.gameObject.SetActive(false);
                 break;
             case ItemType.Output:
                 op.gameObject.SetActive(false);
-                inputs.gameObject.SetActive(false);
                 break;
             default:
                 Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
@@ -90,7 +85,6 @@ public class PropertiesBoxScript : BOX_MAIN {
             case ItemType.Operator:
                 Item_Operation io = (Item_Operation)current;
                 op.value = (int)io.GetItemOperator();
-                inputs.value = io.GetInputs();
                 break;
             case ItemType.Input:
                 break;

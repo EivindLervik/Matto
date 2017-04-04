@@ -12,6 +12,12 @@ public class ItemSettings : MonoBehaviour {
     public string description;
 
     protected bool canOpen;
+    protected Dictionary<string, ItemSettings> inputValues;
+
+    void Awake()
+    {
+        inputValues = new Dictionary<string, ItemSettings>();
+    }
 
     public virtual void OpenProperties()
     {
@@ -31,6 +37,26 @@ public class ItemSettings : MonoBehaviour {
 
 
 
+    public Dictionary<string, ItemSettings> GetInputs()
+    {
+        return inputValues;
+    }
+
+    public void AddInput(string name, ItemSettings itemSettings)
+    {
+        inputValues.Add(name, itemSettings);
+    }
+
+    public void UpdateInput(string name, ItemSettings itemSettings)
+    {
+        inputValues[name] = itemSettings;
+    }
+
+    public bool HasConnection(string name)
+    {
+        return inputValues[name] != null;
+    }
+
     public string GetItemName()
     {
         return itemName;
@@ -48,7 +74,7 @@ public class ItemSettings : MonoBehaviour {
 
     public void Drag()
     {
-        transform.position = Input.mousePosition;
+        transform.parent.position = Input.mousePosition;
         canOpen = false;
     }
 

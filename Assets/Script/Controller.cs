@@ -6,12 +6,16 @@ public class Controller : MonoBehaviour {
 
     public PropertiesBoxScript propertiesIn;
     public MenuBoxScript menuIn;
+    public UsageScript usageIn;
+    public EditorPopulator editorPopulatorIn;
     public GameObject expressionListIn;
     public GameObject expressionEditorIn;
     public GameObject expressionUserIn;
 
     public static PropertiesBoxScript properties;
     public static MenuBoxScript menu;
+    public static UsageScript usage;
+    public static EditorPopulator editorPopulator;
     public static GameObject expressionList;
     public static GameObject expressionEditor;
     public static GameObject expressionUser;
@@ -23,6 +27,8 @@ public class Controller : MonoBehaviour {
     {
         properties = propertiesIn;
         menu = menuIn;
+        usage = usageIn;
+        editorPopulator = editorPopulatorIn;
         expressionList = expressionListIn;
         expressionEditor = expressionEditorIn;
         expressionUser = expressionUserIn;
@@ -43,20 +49,30 @@ public class Controller : MonoBehaviour {
         menu.Toggle(state);
     }
 
-    public static void ToggleExpressionEditor(int index)
+    public static void ToggleExpressionEditor(Expression expression)
     {
-        currentExpression = index;
-        print(expressions[currentExpression]);
+        expressionUser.SetActive(false);
+        expressionEditor.SetActive(true);
+
+        editorPopulator.Populate(expression);
     }
 
-    public static void ToggleExpressionList()
+    public static void ToggleExpressionList(Expression expression)
     {
-        print("Went Back");
+        expressionUser.SetActive(false);
+        expressionList.SetActive(true);
+
+        expression.UpdateExpressionInList();
     }
 
-    public static void ToggleExpressionUse()
+    public static void ToggleExpressionUse(Expression expression)
     {
-        print("Go to usage");
+        expressionUser.SetActive(true);
+        expressionList.SetActive(false);
+        expressionEditor.SetActive(false);
+
+        currentExpression = expressions.IndexOf(expression);
+        usage.SetData(expression);
     }
 
     public static void SetCurrent(ItemSettings current)
@@ -76,18 +92,13 @@ public class Controller : MonoBehaviour {
         expressions.Add(e);
     }
 
-    public static void InsertInputs(GameObject go)
-    {
-        expressions[currentExpression].InsertInput(go);
-    }
-
     public static void InsertGraphix(GameObject go)
     {
         expressions[currentExpression].InsertGraphix(go);
     }
 
-    public static void InsertOutput(GameObject go)
+    public static void RemoveGraphix(GameObject go)
     {
-        expressions[currentExpression].InsertOutput(go);
+        expressions[currentExpression].RemoveGraphix(go);
     }
 }

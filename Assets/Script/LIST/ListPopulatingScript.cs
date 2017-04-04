@@ -40,7 +40,7 @@ public class ListPopulatingScript : MonoBehaviour {
 
 	public void AddExpression () {
         Expression e = MakeGraphix(amount).GetComponent<Expression>();
-        e.id = amount;
+        e.Instantiate();
         Controller.InsertExpression(e);
         amount++;
 
