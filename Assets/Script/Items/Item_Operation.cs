@@ -72,6 +72,16 @@ public class Item_Operation : ItemSettings {
         return DoMath(values);
     }
 
+    public override Dictionary<string, string> GetObjectData()
+    {
+        Dictionary<string, string> data = base.GetObjectData();
+
+        data["Type"] = "Operation";
+        data["Inputs"] = "";
+
+        return data;
+    }
+
 
 
 

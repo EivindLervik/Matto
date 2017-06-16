@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Item_Input : ItemSettings {
+public class Item_Constant : ItemSettings {
 
-    private InputField target;
+    private float constantValue;
 
     public override void OpenProperties()
     {
         if (canOpen)
         {
             base.OpenProperties();
-            Controller.ToggleProperties(true, ItemType.Input, this);
+            Controller.ToggleProperties(true, ItemType.Constant, this);
         }
     }
 
@@ -20,48 +20,23 @@ public class Item_Input : ItemSettings {
     {
         base.ApplySettings(items);
 
+        constantValue = (float)items[2];
+
         GetComponentInChildren<Text>().text = itemName;
     }
 
-    /**
-        This method retrives the value from the previous object
-    **/
     public override float Get()
     {
-        return GetValue();
+        return constantValue;
     }
 
     public override Dictionary<string, string> GetObjectData()
     {
         Dictionary<string, string> data = base.GetObjectData();
 
-        data["Type"] = "Input";
+        data["Type"] = "Constant";
         data["Inputs"] = "";
 
         return data;
-    }
-
-
-
-    // ACCESSERS
-
-    public float GetValue()
-    {
-        return float.Parse(target.text);
-    }
-
-    public void SetValue(float value)
-    {
-        target.text = value.ToString();
-    }
-
-    public InputField GetTarget()
-    {
-        return target;
-    }
-
-    public void SetTarget(InputField target)
-    {
-        this.target = target;
     }
 }

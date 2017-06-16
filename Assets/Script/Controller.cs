@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System;
+using UnityEngine.UI;
 
 public class Controller : MonoBehaviour {
 
@@ -11,6 +15,18 @@ public class Controller : MonoBehaviour {
     public GameObject expressionListIn;
     public GameObject expressionEditorIn;
     public GameObject expressionUserIn;
+    public Transform spawnLayout_Panel;
+    public Transform spawnLayout_Lines;
+
+    [Header("Prefabs")]
+    public GameObject inputPrefabIn;
+    public GameObject operatorPrefabIn;
+    public GameObject constantPrefabIn;
+    public GameObject outputPrefabIn;
+    public static GameObject inputPrefab;
+    public static GameObject operatorPrefab;
+    public static GameObject constantPrefab;
+    public static GameObject outputPrefab;
 
     public static PropertiesBoxScript properties;
     public static MenuBoxScript menu;
@@ -23,6 +39,8 @@ public class Controller : MonoBehaviour {
     private static int currentExpression;
     private static List<Expression> expressions;
 
+    private static List<SavedExpression> stringExpressions;
+
     void Start()
     {
         properties = propertiesIn;
@@ -33,8 +51,18 @@ public class Controller : MonoBehaviour {
         expressionEditor = expressionEditorIn;
         expressionUser = expressionUserIn;
 
+        inputPrefab = inputPrefabIn;
+        operatorPrefab = operatorPrefabIn;
+        constantPrefab = constantPrefabIn;
+        outputPrefab = outputPrefabIn;
+
         currentExpression = 0;
         expressions = new List<Expression>();
+
+        stringExpressions = new List<SavedExpression>();
+
+        Expression.spawnLayout_Panel = spawnLayout_Panel;
+        Expression.spawnLayout_Lines = spawnLayout_Lines;
     }
 
     public static void ToggleProperties(bool state, ItemType itemType, ItemSettings current)
@@ -101,4 +129,109 @@ public class Controller : MonoBehaviour {
     {
         expressions[currentExpression].RemoveGraphix(go);
     }
+
+
+
+    /**
+    Save and load
+    **/
+
+    public static void SaveExpressions()
+    {
+        /*
+        BinaryFormatter bf = new BinaryFormatter();
+        print(Application.persistentDataPath);
+        FileStream file = File.Open(Application.persistentDataPath + "/expressionData.dat", FileMode.Create);
+        
+        stringExpressions = new List<SavedExpression>();
+        foreach(Expression e in expressions)
+        {
+            SavedExpression se = new SavedExpression();
+
+            se.expressionName = e.expressionName;
+            //se.expressionNameText = e.expressionNameText;
+            se.layoutGraphix = e.GetGraphixSerialized();
+
+            stringExpressions.Add(se);
+        }
+        
+        ExpressionData data = new ExpressionData();
+        data.expressions = stringExpressions;
+
+        bf.Serialize(file, data);
+        file.Close();
+        LoadExpressions();
+        */
+    }
+
+    public static void LoadExpressions()
+    {
+        /*
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            print(Application.persistentDataPath);
+            FileStream file = File.Open(Application.persistentDataPath + "/expressionData.dat", FileMode.Open);
+
+            ExpressionData data = (ExpressionData)bf.Deserialize(file);
+
+            foreach (SavedExpression s in data.expressions)
+            {
+                print(s.expressionName);
+
+                foreach (Object o in s.layoutGraphix)
+                {
+                    print("Position X: " + o.positionX);
+                    print("Position Y: " + o.positionY);
+
+                    
+                }
+
+                print("");
+            }
+        }
+        catch (Exception e)
+        {
+            print("No expressions: " + e.Data);
+        }
+        */
+    }
+
+    public static void LoadExpressions(ListPopulatingScript lps)
+    {
+        /*
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            print(Application.persistentDataPath);
+            FileStream file = File.Open(Application.persistentDataPath + "/expressionData.dat", FileMode.Open);
+
+            ExpressionData data = (ExpressionData)bf.Deserialize(file);
+
+            foreach (SavedExpression s in data.expressions)
+            {
+                lps.AddExpression();
+                //currentExpression
+            }
+        }
+        catch (Exception e)
+        {
+            print("No expressions: " + e.Data);
+        }
+        */
+    }
+}
+
+[Serializable]
+class ExpressionData
+{
+    // Expressions as JSON
+    public List<SavedExpression> expressions;
+}
+
+[Serializable]
+class SavedExpression
+{
+    public string expressionName;
+    public List<Object> layoutGraphix;
 }

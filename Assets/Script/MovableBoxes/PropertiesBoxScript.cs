@@ -10,6 +10,7 @@ public class PropertiesBoxScript : BOX_MAIN {
     public InputField itemName;
     public InputField description;
     public Dropdown op;
+    public InputField value;
 
     private ItemSettings current;
     private ItemType itemType;
@@ -44,6 +45,9 @@ public class PropertiesBoxScript : BOX_MAIN {
                 case ItemType.Output:
                     // Something
                     break;
+                case ItemType.Constant:
+                    answer.Add(float.Parse(value.text));
+                    break;
                 default:
                     Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
                     break;
@@ -57,16 +61,23 @@ public class PropertiesBoxScript : BOX_MAIN {
     public void SetCorrectView(ItemType itemType)
     {
         this.itemType = itemType;
+
+        op.gameObject.SetActive(false);
+        value.gameObject.SetActive(false);
+
         switch (itemType)
         {
             case ItemType.Operator:
                 op.gameObject.SetActive(true);
                 break;
             case ItemType.Input:
-                op.gameObject.SetActive(false);
+                // Something
                 break;
             case ItemType.Output:
-                op.gameObject.SetActive(false);
+                // Something
+                break;
+            case ItemType.Constant:
+                value.gameObject.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
@@ -93,6 +104,11 @@ public class PropertiesBoxScript : BOX_MAIN {
                 break;
             case ItemType.Output:
                 title.text = "Output";
+                break;
+            case ItemType.Constant:
+                Item_Constant ic = (Item_Constant)current;
+                value.text = ic.Get().ToString();
+                title.text = "Constant";
                 break;
             default: Debug.LogWarning("No handeling for this operator: " + itemType.ToString());
                 break;

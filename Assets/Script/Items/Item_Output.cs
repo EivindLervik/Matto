@@ -45,6 +45,16 @@ public class Item_Output : ItemSettings {
         return value;
     }
 
+    public override Dictionary<string, string> GetObjectData()
+    {
+        Dictionary<string, string> data = base.GetObjectData();
+
+        data["Type"] = "Output";
+        data["Inputs"] = "";
+
+        return data;
+    }
+
 
 
 

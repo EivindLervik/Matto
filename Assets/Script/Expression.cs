@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Expression : MonoBehaviour {
 
@@ -16,7 +17,10 @@ public class Expression : MonoBehaviour {
     private List<Item_Input> inputs;
     private List<Item_Output> outputs;
 
-	public void Instantiate () {
+    public static Transform spawnLayout_Panel;
+    public static Transform spawnLayout_Lines;
+
+    public void Instantiate () {
         layoutGraphix = new List<GameObject>();
         inputs = new List<Item_Input>();
         outputs = new List<Item_Output>();
@@ -87,6 +91,59 @@ public class Expression : MonoBehaviour {
         return layoutGraphix;
     }
 
+    public List<Object> GetGraphixSerialized()
+    {
+        List<Object> list = new List<Object>();
+
+        foreach (GameObject go in GetGraphix())
+        {
+            ItemSettings current = go.GetComponentInChildren<ItemSettings>();
+            Object o = new Object();
+
+            o.positionX = go.transform.position.x;
+            o.positionY = go.transform.position.y;
+            o.data = current.GetObjectData();
+
+            list.Add(o);
+        }
+
+        return list;
+    }
+
+    public void SetGraphixFromSerialization(List<Object> objects)
+    {
+        foreach (Object o in objects)
+        {
+            GameObject go = null;
+            switch (o.data["Type"])
+            {
+                case "Input":
+                    go = Instantiate(Controller.inputPrefab, spawnLayout_Panel);
+                    break;
+                case "Operator":
+                    go = Instantiate(Controller.operatorPrefab, spawnLayout_Panel);
+                    break;
+                case "Constant":
+                    go = Instantiate(Controller.constantPrefab, spawnLayout_Panel);
+                    break;
+                case "Output":
+                    go = Instantiate(Controller.outputPrefab, spawnLayout_Panel);
+                    break;
+                default:
+                    Debug.LogWarning("Not supported");
+                    break;
+
+            }
+
+            Transform trans = go.transform;
+            trans.position = new Vector3(o.positionX, o.positionY, 0.0f);
+
+            ItemSettings itemSettings = go.GetComponent<ItemSettings>();
+            itemSettings.SetObjectData(o.data);
+        }
+        
+    }
+
 
 
 
@@ -128,4 +185,12 @@ public class Expression : MonoBehaviour {
         }
         expressionNameText.text = expressionName;
     }
+}
+
+[Serializable]
+public class Object
+{
+    public float positionX;
+    public float positionY;
+    public Dictionary<string, string> data;
 }

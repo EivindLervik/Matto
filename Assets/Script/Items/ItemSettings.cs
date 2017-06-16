@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Operator, Input, Output
+    Operator, Input, Output, Constant
 }
 
 public class ItemSettings : MonoBehaviour {
@@ -33,6 +33,24 @@ public class ItemSettings : MonoBehaviour {
     public virtual float Get()
     {
         return 0.0f;
+    }
+
+    public virtual Dictionary<string, string> GetObjectData()
+    {
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data.Add("Name", itemName);
+        data.Add("Description", description);
+        data.Add("Type", "None");
+        data.Add("Inputs", "None");
+
+        return data;
+    }
+
+    public virtual void SetObjectData(Dictionary<string, string> data)
+    {
+        itemName = data["Name"];
+        description = data["Description"];
     }
 
 

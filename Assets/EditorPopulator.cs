@@ -18,6 +18,8 @@ public class EditorPopulator : MonoBehaviour {
 
     public void Done()
     {
+        Controller.SaveExpressions();
+
         foreach (GameObject go in currentExpression.GetGraphix())
         {
             go.SetActive(false);

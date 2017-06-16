@@ -20,6 +20,8 @@ public class ListPopulatingScript : MonoBehaviour {
             MakeGraphix(i);
         }
 
+        Controller.LoadExpressions(this);
+
     }
 
     public GameObject MakeGraphix(int index)
@@ -45,5 +47,7 @@ public class ListPopulatingScript : MonoBehaviour {
         amount++;
 
         e.UseExpression();
+
+        //return e;
     }
 }
