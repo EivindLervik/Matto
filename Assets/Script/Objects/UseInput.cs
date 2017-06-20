@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,24 +21,26 @@ public class UseInput : MonoBehaviour {
         inputField.text = element.value.ToString();
     }
 
-    public void Changed()
+    public bool Save()
     {
         float value = 0;
-        if (!inputField.text.Equals(""))
+        try
         {
             value = float.Parse(inputField.text);
         }
+        catch(FormatException e)
+        {
+            Debug.LogWarning("Tried to write something illegal: " + e);
+            return false;
+        }
         SetValue(value);
+
+        return true;
     }
 
     public void Run()
     {
-        print("Did run");
-        if (!inputField.interactable)
-        {
-            SetValue(element.GetValue());
-            
-        }
+        SetValue(element.GetValue(new Stack<ElementData>()));
     }
 
     private void SetValue(float value)

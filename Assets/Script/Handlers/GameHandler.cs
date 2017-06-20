@@ -8,6 +8,8 @@ public class GameHandler : MonoBehaviour {
     public static DataHandler dataHandler;
     public static ScreenHandler screenHandler;
     public static ObjectHandler objectHandler;
+    public static ErrorHandler errorHandler;
+    public static NetworkHandler networkHandler;
 
     private void Start()
     {
@@ -15,6 +17,8 @@ public class GameHandler : MonoBehaviour {
         dataHandler = GetComponentInChildren<DataHandler>();
         screenHandler = GetComponentInChildren<ScreenHandler>();
         objectHandler = GetComponentInChildren<ObjectHandler>();
+        errorHandler = GetComponentInChildren<ErrorHandler>();
+        networkHandler = GetComponentInChildren<NetworkHandler>();
 
         screenHandler.OpenList();
     }

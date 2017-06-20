@@ -9,7 +9,8 @@ public class UsageController : MonoBehaviour {
     public RectTransform inputs;
     public RectTransform outputs;
 
-    private List<UseInput> objectPool;
+    private List<UseInput> inputPool;
+    private List<UseInput> outputPool;
 
     private int currentExpression;
 
@@ -33,9 +34,18 @@ public class UsageController : MonoBehaviour {
 
     public void RunExpression()
     {
-        foreach(UseInput ui in objectPool)
+        bool ok = true;
+        foreach (UseInput ui in inputPool)
         {
-            ui.Run();
+            ok = ok && ui.Save();
+        }
+
+        if (ok)
+        {
+            foreach (UseInput ui in outputPool)
+            {
+                ui.Run();
+            }
         }
     }
 
@@ -49,7 +59,11 @@ public class UsageController : MonoBehaviour {
 
     private void RemoveObjects()
     {
-        foreach (UseInput ui in objectPool)
+        foreach (UseInput ui in inputPool)
+        {
+            Destroy(ui.gameObject);
+        }
+        foreach (UseInput ui in outputPool)
         {
             Destroy(ui.gameObject);
         }
@@ -57,7 +71,8 @@ public class UsageController : MonoBehaviour {
 
     private void Populate()
     {
-        objectPool = new List<UseInput>();
+        inputPool = new List<UseInput>();
+        outputPool = new List<UseInput>();
         nameField.text = GameHandler.dataHandler.GetExpressionName(currentExpression);
 
         // Create inputs and outputs
@@ -73,7 +88,7 @@ public class UsageController : MonoBehaviour {
 
             ui.SetData(true, ed);
 
-            objectPool.Add(ui);
+            inputPool.Add(ui);
             created++;
         }
         inputs.sizeDelta = new Vector2(((elementSize + padding) * created) + padding, inputs.sizeDelta.y);
@@ -88,7 +103,7 @@ public class UsageController : MonoBehaviour {
 
             ui.SetData(false, ed);
 
-            objectPool.Add(ui);
+            outputPool.Add(ui);
             created++;
         }
         outputs.sizeDelta = new Vector2(((elementSize + padding) * created) + padding, outputs.sizeDelta.y);

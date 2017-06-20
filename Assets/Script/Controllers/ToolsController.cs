@@ -17,6 +17,7 @@ public class ToolsController : MonoBehaviour {
     public InputField descField;
     public InputField valueField;
     public Dropdown operatorDD;
+    public Dropdown modifierDD;
     private bool propertiesOpen;
     private Element propertiesEditingElement;
 
@@ -70,7 +71,11 @@ public class ToolsController : MonoBehaviour {
         string startName = go.GetComponentInChildren<Text>().text;
         if(e.elementType == ElementType.Operator)
         {
-            startName = operatorDD.options[0].text;
+            startName = "Operator";
+        }
+        else if (e.elementType == ElementType.Modifier)
+        {
+            startName = "Modifier";
         }
 
         GameHandler.dataHandler.NewElement(currentExpression, new Vector2(go.transform.localPosition.x, go.transform.localPosition.y), startName, "", (ElementType) index, baseDataValue, e.GetHandleCount());
@@ -94,6 +99,7 @@ public class ToolsController : MonoBehaviour {
 
         valueField.gameObject.SetActive(false);
         operatorDD.gameObject.SetActive(false);
+        modifierDD.gameObject.SetActive(false);
 
         switch (elementType)
         {
@@ -104,7 +110,6 @@ public class ToolsController : MonoBehaviour {
             case ElementType.Operator:
                 operatorDD.gameObject.SetActive(true);
 
-                print(data[0]);
                 operatorDD.value = int.Parse(data[0]);
 
                 break;
@@ -112,6 +117,12 @@ public class ToolsController : MonoBehaviour {
                 valueField.gameObject.SetActive(true);
 
                 valueField.text = data[0];
+
+                break;
+            case ElementType.Modifier:
+                modifierDD.gameObject.SetActive(true);
+
+                modifierDD.value = int.Parse(data[0]);
 
                 break;
             default:
@@ -141,6 +152,12 @@ public class ToolsController : MonoBehaviour {
     public void ChangeOperator()
     {
         GameHandler.dataHandler.UpdateElementData(currentExpression, propertiesEditingElement.GetIndex(), operatorDD.value.ToString(), 0);
+        ReLabel(propertiesEditingElement);
+    }
+
+    public void ChangeModifier()
+    {
+        GameHandler.dataHandler.UpdateElementData(currentExpression, propertiesEditingElement.GetIndex(), modifierDD.value.ToString(), 0);
         ReLabel(propertiesEditingElement);
     }
 
@@ -225,6 +242,10 @@ public class ToolsController : MonoBehaviour {
         {
             e.gameObject.GetComponentInChildren<Text>().text = IntToOperatorLabel(e.GetIndex());
         }
+        else if (e.elementType == ElementType.Modifier)
+        {
+            e.gameObject.GetComponentInChildren<Text>().text = IntToModifierLabel(e.GetIndex());
+        }
         else
         {
             e.gameObject.GetComponentInChildren<Text>().text = GameHandler.dataHandler.GetElementName(currentExpression, e.GetIndex());
@@ -234,6 +255,11 @@ public class ToolsController : MonoBehaviour {
     private string IntToOperatorLabel(int index)
     {
         return operatorDD.options[GameHandler.dataHandler.GetElementDataOperator(currentExpression, index)].text;
+    }
+
+    private string IntToModifierLabel(int index)
+    {
+        return modifierDD.options[GameHandler.dataHandler.GetElementDataModifier(currentExpression, index)].text;
     }
 
     private void Populate()
@@ -258,7 +284,6 @@ public class ToolsController : MonoBehaviour {
         {
             for(int i = 0; i < ed.inputs.Length; i++)
             {
-                //print("Checks: " + ed.inputs[i]);
                 if(ed.inputs[i] != null)
                 {
                     // Add line
@@ -268,9 +293,6 @@ public class ToolsController : MonoBehaviour {
                     ls.SetConnect1(objectPool[currentElement].GetHandels()[i]);
                     ls.SetConnect2(objectPool[GameHandler.dataHandler.GetElementInputDestinationIndex(currentExpression, currentElement, i)].GetHandleOut());
                     ls.SetPlaced(false);
-
-                    // Fix handels
-                    linePool.Add(ls);
                 }
             }
 

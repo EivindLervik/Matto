@@ -34,6 +34,11 @@ public class ListController : MonoBehaviour {
         RefreshList();
     }
 
+    public void OpenStore()
+    {
+        GameHandler.screenHandler.OpenStore();
+    }
+
 
 
 

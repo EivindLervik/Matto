@@ -81,7 +81,6 @@ public class LineScript : MonoBehaviour {
 
     public bool ConnectedTo(Element e)
     {
-        print(e + " - " + connect1 + " : " + connect2);
         if(connect1.GetElement() == e || connect2.GetElement() == e)
         {
             return true;
