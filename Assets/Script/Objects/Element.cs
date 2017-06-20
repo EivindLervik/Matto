@@ -28,13 +28,21 @@ public class Element : MonoBehaviour {
         handleIn = new List<Handle>();
         foreach (Handle h in transform.parent.GetComponentsInChildren<Handle>())
         {
-            if (h.handleType == HandleType.Out)
+            if (h.handleType == HandleType.Out || h.handleType == HandleType.BoolOut)
             {
                 handleOut = h;
             }
             else
             {
-                handleIn.Add(h);
+                if(h.handleType == HandleType.BoolIn)
+                {
+                    handleIn.Insert(0, h);
+
+                }
+                else
+                {
+                    handleIn.Add(h);
+                }
             }
         }
     }

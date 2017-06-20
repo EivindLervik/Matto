@@ -239,12 +239,8 @@ public class DataHandler : MonoBehaviour {
         return allData.expressions[expression].elements[element].value;
     }
 
-    public int GetElementDataOperator(int expression, int element)
-    {
-        return int.Parse(allData.expressions[expression].elements[element].data[0]);
-    }
-
-    public int GetElementDataModifier(int expression, int element)
+    // All dropdowns are on data[0]
+    public int GetElementDataDD(int expression, int element)
     {
         return int.Parse(allData.expressions[expression].elements[element].data[0]);
     }
@@ -464,6 +460,62 @@ public class ElementData
                             break;
                     }
                     break;
+
+                case ElementType.Switch:
+                    if(inputs[0].GetValue(calls) == 1.0f)
+                    {
+                        if (data[0].Equals("0"))
+                        {
+                            retur = inputs[1].GetValue(calls);
+                        }
+                        else
+                        {
+                            retur = inputs[2].GetValue(calls);
+                        }
+                    }
+                    else
+                    {
+                        if (data[0].Equals("1"))
+                        {
+                            retur = inputs[1].GetValue(calls);
+                        }
+                        else
+                        {
+                            retur = inputs[2].GetValue(calls);
+                        }
+
+                    }
+                    break;
+
+                case ElementType.Comparison:
+                    switch (data[0])
+                    {
+                        case "0":
+                            retur = inputs[0].GetValue(calls) > inputs[1].GetValue(calls) ? 1.0f : 0.0f;
+                            break;
+
+                        case "1":
+                            retur = inputs[0].GetValue(calls) < inputs[1].GetValue(calls) ? 1.0f : 0.0f;
+                            break;
+
+                        case "2":
+                            retur = inputs[0].GetValue(calls) == inputs[1].GetValue(calls) ? 1.0f : 0.0f;
+                            break;
+
+                        case "3":
+                            retur = inputs[0].GetValue(calls) >= inputs[1].GetValue(calls) ? 1.0f : 0.0f;
+                            break;
+
+                        case "4":
+                            retur = inputs[0].GetValue(calls) <= inputs[1].GetValue(calls) ? 1.0f : 0.0f;
+                            break;
+
+                        case "5":
+                            retur = inputs[0].GetValue(calls) != inputs[1].GetValue(calls) ? 1.0f : 0.0f;
+                            break;
+                    }
+                    
+                    break;
             }
         }
         catch (NullReferenceException e)
@@ -479,5 +531,5 @@ public class ElementData
 [Serializable]
 public enum ElementType
 {
-    Input, Output, Operator, Constant, Modifier
+    Input, Output, Operator, Constant, Modifier, Switch, Comparison
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LineScript : MonoBehaviour {
 
@@ -56,6 +57,11 @@ public class LineScript : MonoBehaviour {
     public void SetConnect1(Handle h)
     {
         connect1 = h;
+
+        if (connect1.handleType == HandleType.BoolIn || connect1.handleType == HandleType.BoolOut)
+        {
+            GetComponent<Image>().color = new Color(0.0f, 150.0f, 255.0f);
+        }
     }
 
     public void SetConnect2(Handle h)

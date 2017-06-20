@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum HandleType
 {
-    In, Out
+    In, Out, BoolIn, BoolOut
 }
 
 public class Handle : MonoBehaviour {
@@ -30,13 +30,21 @@ public class Handle : MonoBehaviour {
 
     public void Enter()
     {
-        if(otherHandle.Count > 0 && handleType == HandleType.In)
+        if(otherHandle.Count > 0 && (handleType == HandleType.In || handleType == HandleType.BoolIn))
         {
 
         }
         else
         {
-            RectTransform trans = Instantiate(GameHandler.objectHandler.line, element.GetCallBack().lines).GetComponent<RectTransform>();
+            RectTransform trans = null;
+            if (handleType == HandleType.BoolIn || handleType == HandleType.BoolOut)
+            {
+                trans = Instantiate(GameHandler.objectHandler.line, element.GetCallBack().lines).GetComponent<RectTransform>();
+            }
+            else
+            {
+                trans = Instantiate(GameHandler.objectHandler.line, element.GetCallBack().lines).GetComponent<RectTransform>();
+            }
             trans.transform.position = transform.position;
 
             LineScript ls = trans.gameObject.GetComponent<LineScript>();
@@ -53,7 +61,7 @@ public class Handle : MonoBehaviour {
 
         // Check if the connection is in cross
         bool cross = false;
-        if(handleType == HandleType.In)
+        if(handleType == HandleType.In || handleType == HandleType.BoolIn)
         {
             if(element.GetHandleOut() != null)
             {
@@ -86,10 +94,19 @@ public class Handle : MonoBehaviour {
 
         if (ls.connect1.element == ls.connect2.element ||
             ls.connect1.handleType == ls.connect2.handleType ||
-            (otherHandle.Count > 0 && handleType == HandleType.In) ||
+            (otherHandle.Count > 0 && (handleType == HandleType.In || handleType == HandleType.BoolIn)) ||
             cross
             )
         {
+            ls.connect2 = null;
+        }
+        else if (((ls.connect1.handleType == HandleType.BoolIn || ls.connect1.handleType == HandleType.BoolOut) && 
+            (ls.connect2.handleType == HandleType.In || ls.connect2.handleType == HandleType.Out)) ||
+            ((ls.connect2.handleType == HandleType.BoolIn || ls.connect2.handleType == HandleType.BoolOut) &&
+            (ls.connect1.handleType == HandleType.In || ls.connect1.handleType == HandleType.Out))
+            )
+        {
+            // Connect bool to values
             ls.connect2 = null;
         }
         else
@@ -107,7 +124,7 @@ public class Handle : MonoBehaviour {
 
         otherHandle.Add(h);
 
-        if (save && handleType == HandleType.In)
+        if (save && (handleType == HandleType.In || handleType == HandleType.BoolIn))
         {
             element.SaveNewConnection(this, otherHandle[0].element);
         }
@@ -115,7 +132,7 @@ public class Handle : MonoBehaviour {
 
     public void DeleteOtherHandle(Handle h)
     {
-        if (handleType == HandleType.In)
+        if (handleType == HandleType.In || handleType == HandleType.BoolIn)
         {
             element.DeleteConnection(this, otherHandle[0].element);
         }

@@ -18,19 +18,12 @@ public class ToolsController : MonoBehaviour {
     public InputField valueField;
     public Dropdown operatorDD;
     public Dropdown modifierDD;
+    public Dropdown comparisonDD;
+    public Dropdown switchDD;
     private bool propertiesOpen;
     private Element propertiesEditingElement;
 
     public LineScript currentDrawingLine;
-
-    /**
-     * 
-     * (0) - Input
-     * (1) - Output
-     * (2) - Operator
-     * (3) - Constant
-     * 
-    **/
 
     private int currentExpression;
     private List<Element> objectPool;
@@ -77,6 +70,14 @@ public class ToolsController : MonoBehaviour {
         {
             startName = "Modifier";
         }
+        else if (e.elementType == ElementType.Switch)
+        {
+            startName = "Switch";
+        }
+        else if (e.elementType == ElementType.Comparison)
+        {
+            startName = "Comparison";
+        }
 
         GameHandler.dataHandler.NewElement(currentExpression, new Vector2(go.transform.localPosition.x, go.transform.localPosition.y), startName, "", (ElementType) index, baseDataValue, e.GetHandleCount());
 
@@ -100,6 +101,8 @@ public class ToolsController : MonoBehaviour {
         valueField.gameObject.SetActive(false);
         operatorDD.gameObject.SetActive(false);
         modifierDD.gameObject.SetActive(false);
+        switchDD.gameObject.SetActive(false);
+        comparisonDD.gameObject.SetActive(false);
 
         switch (elementType)
         {
@@ -125,6 +128,21 @@ public class ToolsController : MonoBehaviour {
                 modifierDD.value = int.Parse(data[0]);
 
                 break;
+
+            case ElementType.Switch:
+                switchDD.gameObject.SetActive(true);
+
+                switchDD.value = int.Parse(data[0]);
+
+                break;
+
+            case ElementType.Comparison:
+                comparisonDD.gameObject.SetActive(true);
+
+                comparisonDD.value = int.Parse(data[0]);
+
+                break;
+
             default:
                 Debug.LogWarning("Element not handeled!");
                 break;
@@ -158,6 +176,18 @@ public class ToolsController : MonoBehaviour {
     public void ChangeModifier()
     {
         GameHandler.dataHandler.UpdateElementData(currentExpression, propertiesEditingElement.GetIndex(), modifierDD.value.ToString(), 0);
+        ReLabel(propertiesEditingElement);
+    }
+
+    public void ChangeSwitch()
+    {
+        GameHandler.dataHandler.UpdateElementData(currentExpression, propertiesEditingElement.GetIndex(), switchDD.value.ToString(), 0);
+        ReLabel(propertiesEditingElement);
+    }
+
+    public void ChangeComparison()
+    {
+        GameHandler.dataHandler.UpdateElementData(currentExpression, propertiesEditingElement.GetIndex(), comparisonDD.value.ToString(), 0);
         ReLabel(propertiesEditingElement);
     }
 
@@ -240,11 +270,19 @@ public class ToolsController : MonoBehaviour {
     {
         if (e.elementType == ElementType.Operator)
         {
-            e.gameObject.GetComponentInChildren<Text>().text = IntToOperatorLabel(e.GetIndex());
+            e.gameObject.GetComponentInChildren<Text>().text = IntToDDLabel(operatorDD, e.GetIndex());
         }
         else if (e.elementType == ElementType.Modifier)
         {
-            e.gameObject.GetComponentInChildren<Text>().text = IntToModifierLabel(e.GetIndex());
+            e.gameObject.GetComponentInChildren<Text>().text = IntToDDLabel(modifierDD, e.GetIndex());
+        }
+        else if (e.elementType == ElementType.Comparison)
+        {
+            e.gameObject.GetComponentInChildren<Text>().text = IntToDDLabel(comparisonDD, e.GetIndex());
+        }
+        else if (e.elementType == ElementType.Switch)
+        {
+            e.gameObject.GetComponentInChildren<Text>().text = IntToDDLabel(switchDD, e.GetIndex());
         }
         else
         {
@@ -252,14 +290,9 @@ public class ToolsController : MonoBehaviour {
         }
     }
 
-    private string IntToOperatorLabel(int index)
+    private string IntToDDLabel(Dropdown dd, int index)
     {
-        return operatorDD.options[GameHandler.dataHandler.GetElementDataOperator(currentExpression, index)].text;
-    }
-
-    private string IntToModifierLabel(int index)
-    {
-        return modifierDD.options[GameHandler.dataHandler.GetElementDataModifier(currentExpression, index)].text;
+        return dd.options[GameHandler.dataHandler.GetElementDataDD(currentExpression, index)].text;
     }
 
     private void Populate()
@@ -287,6 +320,9 @@ public class ToolsController : MonoBehaviour {
                 if(ed.inputs[i] != null)
                 {
                     // Add line
+
+                    // TODO - Make special line for bools
+
                     GameObject go = Instantiate(GameHandler.objectHandler.line, lines);
 
                     LineScript ls = go.GetComponent<LineScript>();
