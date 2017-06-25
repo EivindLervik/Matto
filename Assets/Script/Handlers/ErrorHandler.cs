@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ErrorType
 {
-    Loop, MissingInput
+    Loop, MissingInput, InvalidUsername
 }
 
 public class ErrorHandler : MonoBehaviour {
@@ -29,6 +29,10 @@ public class ErrorHandler : MonoBehaviour {
 
             case ErrorType.MissingInput:
                 menu.Open("Missing input", "One or more of your blocks have missing inputs.");
+                break;
+
+            case ErrorType.InvalidUsername:
+                menu.Open("Invalid username", "Your username is invalid. Try another one.");
                 break;
         }
     }

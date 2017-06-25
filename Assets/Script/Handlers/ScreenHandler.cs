@@ -8,11 +8,14 @@ public class ScreenHandler : MonoBehaviour {
     public GameObject usage;
     public GameObject tools;
     public GameObject store;
+    public GameObject preferences;
+    public GameObject mainMenu;
 
     private ListController listController;
     private UsageController usageController;
     private ToolsController toolsController;
     private StoreController storeController;
+    private PreferencesController preferencesController;
 
     private void Start()
     {
@@ -20,6 +23,7 @@ public class ScreenHandler : MonoBehaviour {
         usageController = usage.GetComponent<UsageController>();
         toolsController = tools.GetComponent<ToolsController>();
         storeController = store.GetComponent<StoreController>();
+        preferencesController = preferences.GetComponent<PreferencesController>();
 
         DisableAll();
     }
@@ -51,11 +55,26 @@ public class ScreenHandler : MonoBehaviour {
         store.SetActive(true);
     }
 
+    public void OpenPreferences()
+    {
+        DisableAll();
+        preferences.SetActive(true);
+        preferencesController.Populate();
+    }
+
+    public void OpenMainMenu()
+    {
+        DisableAll();
+        mainMenu.SetActive(true);
+    }
+
     private void DisableAll()
     {
         list.SetActive(false);
         usage.SetActive(false);
         tools.SetActive(false);
         store.SetActive(false);
+        preferences.SetActive(false);
+        mainMenu.SetActive(false);
     }
 }

@@ -7,6 +7,8 @@ public class ToolsController : MonoBehaviour {
 
     public float menuSpeedModefier;
 
+    public RectTransform canvas;
+    public RectTransform canvasScaler;
     public Transform lines;
     public Transform panels;
 
@@ -264,6 +266,71 @@ public class ToolsController : MonoBehaviour {
         {
             properties.localPosition = Vector3.Lerp(properties.localPosition, new Vector3(properties.anchorMax.x * -Screen.width, 0.0f, 0.0f), Time.deltaTime * menuSpeedModefier);
         }
+
+        // Zooming
+        float sizeModefier = 0.5f * GameHandler.preferenceHandler.GetZoomSpeed();
+        float delta = 0;
+        if(Input.touchCount == 2)
+        {
+            // Store both touches.
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            // Find the position in the previous frame of each touch.
+            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+            // Find the magnitude of the vector (the distance) between the touches in each frame.
+            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+            // Find the difference in the distances between each frame.
+            delta = prevTouchDeltaMag - touchDeltaMag;
+            
+            Vector3 startScale = canvasScaler.localScale;
+            startScale.x -= delta * sizeModefier * Time.deltaTime;
+            startScale.y -= delta * sizeModefier * Time.deltaTime;
+
+            Vector2 scaleLimits = new Vector2(0.75f, 2.0f);
+            startScale.x = Mathf.Clamp(startScale.x, scaleLimits.x, scaleLimits.y);
+            startScale.y = Mathf.Clamp(startScale.y, scaleLimits.x, scaleLimits.y);
+
+            canvasScaler.localScale = startScale;
+        }
+
+        Vector3 recover = canvas.position;
+        if (canvas.position.x > 0.0f)
+        {
+            recover.x = 0.0f;
+        }
+        else if (canvas.position.x < Screen.width - (canvas.sizeDelta.x * canvasScaler.localScale.x))
+        {
+            recover.x = Screen.width - (canvas.sizeDelta.x * canvasScaler.localScale.x);
+        }
+        if (canvas.position.y < Screen.height)
+        {
+            recover.y = Screen.height;
+        }
+        
+        else if (canvas.position.y > canvas.sizeDelta.y * canvasScaler.localScale.y)
+        {
+            recover.y = canvas.sizeDelta.y * canvasScaler.localScale.y;
+        }
+        
+        canvas.position = recover;
+        panels.position = canvas.position;
+    }
+
+    private Vector3 prevPos;
+    public void MoveCanvasDown()
+    {
+        prevPos = Input.mousePosition;
+    }
+    public void MoveCanvas()
+    {
+        canvas.Translate((Input.mousePosition- prevPos), Space.World);
+
+        MoveCanvasDown();
     }
 
     private void ReLabel(Element e)

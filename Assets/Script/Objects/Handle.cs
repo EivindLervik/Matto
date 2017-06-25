@@ -81,7 +81,6 @@ public class Handle : MonoBehaviour {
             {
                 foreach (Handle h in parentH.otherHandle)
                 {
-                    print(h.element.GetInstanceID() + " - " + ls.connect1.element.GetInstanceID());
                     if (h.element == ls.connect1.element)
                     {
                         cross = true;

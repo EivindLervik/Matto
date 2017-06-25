@@ -8,7 +8,7 @@ public class StoreController : MonoBehaviour {
 	
     public void GoBack()
     {
-        GameHandler.screenHandler.OpenList();
+        GameHandler.screenHandler.OpenMainMenu();
     }
 
 }

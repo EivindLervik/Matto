@@ -26,10 +26,11 @@ public class LineScript : MonoBehaviour {
         if (placed)
         {
             Vector3 pos = connect2.transform.position;
+            float panelScale = connect1.GetElement().GetCallBack().canvasScaler.localScale.x;
             float modifier = Mathf.Sign(Vector3.Dot(Vector3.left, (pos - trans.position).normalized));
             float angle = Vector3.Angle(Vector3.up, (pos - trans.position).normalized);
             trans.localEulerAngles = new Vector3(0.0f, 0.0f, modifier * angle);
-            trans.sizeDelta = new Vector2(trans.sizeDelta.x, Vector3.Distance(trans.position, pos));
+            trans.sizeDelta = new Vector2(trans.sizeDelta.x, Vector3.Distance(trans.position, pos) / panelScale);
         }
         else
         {
@@ -39,10 +40,12 @@ public class LineScript : MonoBehaviour {
                 pos = Input.GetTouch(0).position;
             }
 
+            float panelScale = connect1.GetElement().GetCallBack().canvasScaler.localScale.x;
             float modifier = Mathf.Sign(Vector3.Dot(Vector3.left, (pos - trans.position).normalized));
             float angle = Vector3.Angle(Vector3.up, (pos - trans.position).normalized);
             trans.localEulerAngles = new Vector3(0.0f, 0.0f, modifier * angle);
-            trans.sizeDelta = new Vector2(trans.sizeDelta.x, Vector3.Distance(trans.position, pos));
+            trans.sizeDelta = new Vector2(trans.sizeDelta.x,  Vector3.Distance(trans.position, pos) / panelScale);
+            print(panelScale);
         }
     }
 
