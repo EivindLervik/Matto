@@ -1,0 +1,60 @@
+﻿	COMMON
+enter_text|Skriv inn:
+done|Ferdig
+ok|OK
+menu|Meny
+close|Lukk
+delete|Slett
+
+	MISC
+matto|Matto
+
+	PREFERENCES
+pref_title|Preferanser
+pref_user|Brukernavn:
+pref_zoom|Zoom fart:
+pref_lang|Språk:
+
+	MAINMENU / LIST
+my_exp|Mine uttrykk
+main_market|Markedsplass
+main_pref|Preferanser
+
+	USAGE
+exp_name|Navn:
+exp_my_ex|Mitt uttrykk...
+exp_back|Tilbake
+exp_run|Kjør
+exp_edit|Endre
+exp_in|Inputter
+exp_out|Utputter
+
+	TOOLS
+tools_el_in|Input
+tools_el_out|Utput
+tools_el_op|Operator
+tools_el_con|Konstant
+tools_el_mod|Modifiserer
+tools_el_swi|Velger
+tools_el_com|Sammenligner
+tools_pro_nam_t|Navn
+tools_pro_nam_c|Skriv inn navn...
+tools_pro_des_t|Forklaring
+tools_pro_des_c|Skriv inn forklaring...
+tools_pro_val_t|Verdi
+tools_pro_val_c|Skriv inn verdi...
+tools_pro_op|Operator-type
+tools_pro_mod|Modifiserings-type
+tools_pro_in|Input
+tools_pro_if|Dersom sann, velg
+tools_pro_up|OPP
+tools_pro_down|NED
+tools_pro_comp|Sammenligning
+
+	MESSAGES
+msg_loop_t|Loop-error
+msg_loop_c|Det finnes en loop en plass i utrykket ditt, og utrykket kunne ikke regnes ut.
+msg_missing_t|Manglende input
+msg_missing_c|En eller flere av blokkene dine mangler input.
+msg_usr_t|Ugyldig brukernavn
+msg_usr_c|Brukernavnet ditt er ugyldig. Prøv et annet.

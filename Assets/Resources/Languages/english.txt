@@ -1,0 +1,60 @@
+﻿	COMMON
+enter_text|Enter text...
+done|Done
+ok|OK
+menu|Menu
+close|Close
+delete|Delete
+
+	MISC
+matto|Matto
+
+	PREFERENCES
+pref_title|Preferences
+pref_user|Username:
+pref_zoom|Zoom speed:
+pref_lang|Language:
+
+	MAINMENU / LIST
+my_exp|My expressions
+main_market|Marketplace
+main_pref|Preferences
+
+	USAGE
+exp_name|Name:
+exp_my_ex|My Expression...
+exp_back|Back
+exp_run|Run
+exp_edit|Edit
+exp_in|Inputs
+exp_out|Outputs
+
+	TOOLS
+tools_el_in|Input
+tools_el_out|Output
+tools_el_op|Operator
+tools_el_con|Constant
+tools_el_mod|Modifier
+tools_el_swi|Switch
+tools_el_com|Comparer
+tools_pro_nam_t|Name
+tools_pro_nam_c|Enter name...
+tools_pro_des_t|Description
+tools_pro_des_c|Enter description...
+tools_pro_val_t|Value
+tools_pro_val_c|Enter value...
+tools_pro_op|Operator type
+tools_pro_mod|Modifier type
+tools_pro_in|Input
+tools_pro_if|If true, choose
+tools_pro_up|UP
+tools_pro_down|DOWN
+tools_pro_comp|Comparison
+
+	MESSAGES
+msg_loop_t|Loop-error
+msg_loop_c|The expression has a loop somewhere and could not give an answer.
+msg_missing_t|Missing input
+msg_missing_c|One or more of your blocks have missing inputs.
+msg_usr_t|Invalid username
+msg_usr_c|Your username is invalid. Try another one.

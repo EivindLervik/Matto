@@ -25,6 +25,12 @@ public class GameHandler : MonoBehaviour {
 
         screenHandler = GetComponentInChildren<ScreenHandler>();
 
+        // Do the objectserching
+        screenHandler.EnableAll();
+        objectHandler.Initialize();
+        languageHandler.Initialize();
+        screenHandler.DisableAll();
+
         if (preferenceHandler.GetUsername() == "")
         {
             screenHandler.OpenPreferences();

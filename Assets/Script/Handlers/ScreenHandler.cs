@@ -68,7 +68,7 @@ public class ScreenHandler : MonoBehaviour {
         mainMenu.SetActive(true);
     }
 
-    private void DisableAll()
+    public void DisableAll()
     {
         list.SetActive(false);
         usage.SetActive(false);
@@ -76,5 +76,15 @@ public class ScreenHandler : MonoBehaviour {
         store.SetActive(false);
         preferences.SetActive(false);
         mainMenu.SetActive(false);
+    }
+
+    public void EnableAll()
+    {
+        list.SetActive(true);
+        usage.SetActive(true);
+        tools.SetActive(true);
+        store.SetActive(true);
+        preferences.SetActive(true);
+        mainMenu.SetActive(true);
     }
 }

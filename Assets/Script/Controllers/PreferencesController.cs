@@ -23,7 +23,9 @@ public class PreferencesController : MonoBehaviour {
 		for (int i = 0; i < GameHandler.languageHandler.GetLanguageCount(); i++) {
 			options.Add (vals[i].ToString());
 		}
+        languages.ClearOptions();
 		languages.AddOptions (options);
+        languages.value = (int) GameHandler.preferenceHandler.GetLanguage();
     }
 
     public void Save()
@@ -37,6 +39,11 @@ public class PreferencesController : MonoBehaviour {
         {
             GameHandler.errorHandler.ThrowError(ErrorType.InvalidUsername);
         }
+    }
+
+    public void ChangeLanguage()
+    {
+        GameHandler.languageHandler.SetLanguage((Language)languages.value);
     }
 
 }

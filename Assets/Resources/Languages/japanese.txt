@@ -1,0 +1,60 @@
+﻿	COMMON
+enter_text|テキストを入力
+done|完了
+ok|はい
+menu|献立
+close|閉じる
+delete|削除
+
+	MISC
+matto|マット
+
+	PREFERENCES
+pref_title|設定
+pref_user|ユーザー名:
+pref_zoom|ズームスピード:
+pref_lang|言語:
+
+	MAINMENU / LIST
+my_exp|数学
+main_market|市場
+main_pref|設定
+
+	USAGE
+exp_name|名前:
+exp_my_ex|私の数学...
+exp_back|バック
+exp_run|実行する
+exp_edit|変化する
+exp_in|入力
+exp_out|出力
+
+	TOOLS
+tools_el_in|入力
+tools_el_out|出力
+tools_el_op|オペレーター
+tools_el_con|一定値
+tools_el_mod|修飾語
+tools_el_swi|選択者
+tools_el_com|比較者
+tools_pro_nam_t|名前
+tools_pro_nam_c|名前を入力...
+tools_pro_des_t|説明
+tools_pro_des_c|説明を入力...
+tools_pro_val_t|値
+tools_pro_val_c|値を入力...
+tools_pro_op|オペレータタイプ
+tools_pro_mod|修飾子タイプ
+tools_pro_in|入力
+tools_pro_if|真の場合は、これを選択します。
+tools_pro_up|アップ
+tools_pro_down|ダウン
+tools_pro_comp|比較する
+
+	MESSAGES
+msg_loop_t|ループエラー
+msg_loop_c|式にループがあり、正しく実行できませんでした。
+msg_missing_t|入力がありません
+msg_missing_c|1つまたは複数のブロックに入力がありません。
+msg_usr_t|悪いユーザー名
+msg_usr_c|あなたのユーザー名は悪いです。 もう一度試してみてください。

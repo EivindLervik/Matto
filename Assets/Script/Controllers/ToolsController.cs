@@ -134,6 +134,13 @@ public class ToolsController : MonoBehaviour {
             case ElementType.Switch:
                 switchDD.gameObject.SetActive(true);
 
+                // Add up and down
+                List<string> l = new List<string>();
+                l.Add(GameHandler.languageHandler.GetText("tools_pro_up"));
+                l.Add(GameHandler.languageHandler.GetText("tools_pro_down"));
+                switchDD.ClearOptions();
+                switchDD.AddOptions(l);
+
                 switchDD.value = int.Parse(data[0]);
 
                 break;
@@ -346,10 +353,6 @@ public class ToolsController : MonoBehaviour {
         else if (e.elementType == ElementType.Comparison)
         {
             e.gameObject.GetComponentInChildren<Text>().text = IntToDDLabel(comparisonDD, e.GetIndex());
-        }
-        else if (e.elementType == ElementType.Switch)
-        {
-            e.gameObject.GetComponentInChildren<Text>().text = IntToDDLabel(switchDD, e.GetIndex());
         }
         else
         {

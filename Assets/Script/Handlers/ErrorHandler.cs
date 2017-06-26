@@ -24,15 +24,15 @@ public class ErrorHandler : MonoBehaviour {
         switch (e)
         {
             case ErrorType.Loop:
-                menu.Open("Loop-error", "The expression has a loop somewhere and could not give an answer.");
+                menu.Open(GameHandler.languageHandler.GetText("msg_loop_t"), GameHandler.languageHandler.GetText("msg_loop_c"));
                 break;
 
             case ErrorType.MissingInput:
-                menu.Open("Missing input", "One or more of your blocks have missing inputs.");
+                menu.Open(GameHandler.languageHandler.GetText("msg_missing_t"), GameHandler.languageHandler.GetText("msg_missing_c"));
                 break;
 
             case ErrorType.InvalidUsername:
-                menu.Open("Invalid username", "Your username is invalid. Try another one.");
+                menu.Open(GameHandler.languageHandler.GetText("msg_usr_t"), GameHandler.languageHandler.GetText("msg_usr_c"));
                 break;
         }
     }
