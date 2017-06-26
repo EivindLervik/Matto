@@ -6,11 +6,13 @@ public class PreferenceHandler : MonoBehaviour {
 
     private const string USERNAME = "USERNAME";
     private const string ZOOMSPEED = "ZOOMSPEED";
+	private const string LANGUAGE = "LANGUAGE";
 
-    public void UpdatePreferences(string username, float zoomSpeed)
+	public void UpdatePreferences(string username, float zoomSpeed, int language)
     {
         SetUsername(username);
         SetZoomSpeed(zoomSpeed);
+		SetLanguage (language);
         PlayerPrefs.Save();
     }
 
@@ -33,4 +35,12 @@ public class PreferenceHandler : MonoBehaviour {
     {
         PlayerPrefs.SetFloat(ZOOMSPEED, zoomSpeed);
     }
+
+	public Language GetLanguage(){
+		return (Language)PlayerPrefs.GetInt(LANGUAGE);
+	}
+
+	private void SetLanguage(int language){
+		PlayerPrefs.SetInt(LANGUAGE, language);
+	}
 }

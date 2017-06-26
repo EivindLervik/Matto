@@ -11,6 +11,7 @@ public class GameHandler : MonoBehaviour {
     public static ErrorHandler errorHandler;
     public static NetworkHandler networkHandler;
     public static PreferenceHandler preferenceHandler;
+	public static LanguageHandler languageHandler;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class GameHandler : MonoBehaviour {
         errorHandler = GetComponentInChildren<ErrorHandler>();
         networkHandler = GetComponentInChildren<NetworkHandler>();
         preferenceHandler = GetComponentInChildren<PreferenceHandler>();
+		languageHandler = GetComponentInChildren<LanguageHandler>();
 
         screenHandler = GetComponentInChildren<ScreenHandler>();
 
