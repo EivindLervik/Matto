@@ -18,7 +18,15 @@ pref_lang|Language:
 	MAINMENU / LIST
 my_exp|My expressions
 main_market|Marketplace
+main_help|Help
 main_pref|Preferences
+
+	HELP-SCREEN
+help_title|Help
+help_block|Blocks
+help_line|Lines
+help_line_r|Red line
+help_line_b|Blue line
 
 	USAGE
 exp_name|Name:
@@ -36,7 +44,7 @@ tools_el_op|Operator
 tools_el_con|Constant
 tools_el_mod|Modifier
 tools_el_swi|Switch
-tools_el_com|Comparer
+tools_el_com|Comparison
 tools_pro_nam_t|Name
 tools_pro_nam_c|Enter name...
 tools_pro_des_t|Description
@@ -58,3 +66,23 @@ msg_missing_t|Missing input
 msg_missing_c|One or more of your blocks have missing inputs.
 msg_usr_t|Invalid username
 msg_usr_c|Your username is invalid. Try another one.
+
+	HELP
+msg_input_t|Input
+msg_input_c|This is a block provides a way to input different values into the expression.
+msg_output_t|Output
+msg_output_c|This block takes a value and presents it out of the expression.
+msg_operator_t|Operator
+msg_operator_c|This block takes two or more values and does an operation with them.
+msg_constant_t|Constant
+msg_constant_c|This block provides a constant number you can put in yourself.
+msg_modifier_t|Modifier
+msg_modifier_c|This block modifies the input value.
+msg_switch_t|Switch
+msg_switch_c|This block does a selection of input based on the true/false signal recieved.
+msg_comparison_t|Comparison
+msg_comparison_c|This block evaluates the two inputed values and produces a true/false signal based on that.
+msg_red_l_t|Red line
+msg_red_l_c|This line connects a block's output to another block's input. The line convey a value.
+msg_blue_l_t|Blue line
+msg_blue_l_c|This line connects a block's true/false output to another block's true/false input. The line convey a true/false signal.

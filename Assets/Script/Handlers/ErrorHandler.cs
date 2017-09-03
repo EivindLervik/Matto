@@ -37,4 +37,9 @@ public class ErrorHandler : MonoBehaviour {
         }
     }
 
+    public void DisplayMessage(string key)
+    {
+        menu.Open(GameHandler.languageHandler.GetText(key + "_t"), GameHandler.languageHandler.GetText(key + "_c"));
+    }
+
 }

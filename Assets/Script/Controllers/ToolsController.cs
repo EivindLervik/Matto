@@ -30,6 +30,7 @@ public class ToolsController : MonoBehaviour {
     private int currentExpression;
     private List<Element> objectPool;
     private List<LineScript> linePool;
+    private string propertiesHelpString;
 
     public void SetCurrentExpression(int expression)
     {
@@ -105,6 +106,9 @@ public class ToolsController : MonoBehaviour {
         modifierDD.gameObject.SetActive(false);
         switchDD.gameObject.SetActive(false);
         comparisonDD.gameObject.SetActive(false);
+
+        // Set help-string
+        propertiesHelpString = "msg_" + elementType.ToString().ToLower();
 
         switch (elementType)
         {
@@ -248,6 +252,16 @@ public class ToolsController : MonoBehaviour {
     public int GetCurrentExpression()
     {
         return currentExpression;
+    }
+
+    public void GetHelp()
+    {
+        GameHandler.errorHandler.DisplayMessage(propertiesHelpString);
+    }
+
+    public void GetHelp(string key)
+    {
+        GameHandler.errorHandler.DisplayMessage("msg_" + key);
     }
 
 
