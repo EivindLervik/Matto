@@ -56,7 +56,15 @@ public class LanguageHandler : MonoBehaviour {
 
     public string GetText(string key)
     {
-        return dict[key];
+        try
+        {
+            return dict[key];
+        }
+        catch(KeyNotFoundException e)
+        {
+            Debug.LogError("This language does not have this key: " + key + ". Error printout: " + e.ToString());
+            return null;
+        }
     }
 
 }

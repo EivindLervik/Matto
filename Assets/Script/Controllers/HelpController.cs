@@ -10,22 +10,29 @@ public class HelpController : MonoBehaviour {
     public Button linesBTN;
     public GameObject lines;
 
-    public void OpenBlocks()
+    public void Open(string menuType)
     {
         DisableAll();
         EnableAllButtons();
 
-        blocks.SetActive(true);
-        blocksBTN.interactable = false;
-    }
-
-    public void OpenLines()
-    {
-        DisableAll();
-        EnableAllButtons();
-
-        lines.SetActive(true);
-        linesBTN.interactable = false;
+        switch (menuType)
+        {
+            case "Blocks":
+                blocks.SetActive(true);
+                blocksBTN.interactable = false;
+                break;
+            case "Lines":
+                lines.SetActive(true);
+                linesBTN.interactable = false;
+                break;
+            case "NONE1":
+                break;
+            case "NONE2":
+                break;
+            default:
+                Debug.LogError("The menu type '" + menuType + "' is not handled!");
+                break;
+        }
     }
 
 

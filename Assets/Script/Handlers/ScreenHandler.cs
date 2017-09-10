@@ -75,7 +75,7 @@ public class ScreenHandler : MonoBehaviour {
     {
         DisableAll();
         help.SetActive(true);
-        helpController.OpenBlocks();
+        helpController.Open("Blocks");
     }
 
     public void DisableAll()
